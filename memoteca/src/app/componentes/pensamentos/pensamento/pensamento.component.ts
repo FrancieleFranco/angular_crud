@@ -6,12 +6,13 @@ import { Pensamento } from '../pensamento';
   templateUrl: './pensamento.component.html',
   styleUrls: ['./pensamento.component.css']
 })
-export class PensamentoComponent {
+export class PensamentoComponent  {
   @Input() pensamento: Pensamento = {
     id: 0,
     conteudo: 'I love Angular',
     autoria: 'Fran',
-    modelo: 'modelo3'
+    modelo: 'modelo3',
+    favorito: false
 }
 
   larguraPensamento() : string{
