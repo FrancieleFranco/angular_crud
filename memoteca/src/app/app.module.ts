@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExcluirPensamentoComponent } from './componentes/pensamentos/excluir-pensamento/excluir-pensamento.component';
 import { EditarPensamentoComponent } from './componentes/pensamentos/editar-pensamento/editar-pensamento.component';
 import { BotaoCarregarMaisComponent } from './componentes/pensamentos/listar-pensamento/botao-carregar-mais/botao-carregar-mais.component';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomReuseStrategy } from './componentes/pensamentos/custom-reuse-estrategy';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,7 @@ import { BotaoCarregarMaisComponent } from './componentes/pensamentos/listar-pen
     ReactiveFormsModule
   ],
 
-  providers: [],
+  providers: [{provide: RouteReuseStrategy, useClass: CustomReuseStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

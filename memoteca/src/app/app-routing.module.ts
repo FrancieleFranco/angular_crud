@@ -6,15 +6,28 @@ import { ExcluirPensamentoComponent } from './componentes/pensamentos/excluir-pe
 import { EditarPensamentoComponent } from './componentes/pensamentos/editar-pensamento/editar-pensamento.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: "listarPensamento", pathMatch: 'full'},
+  { path: '', redirectTo: 'listarPensamento', pathMatch: 'full' },
   { path: 'criarPensamento', component: CriarPensamentoComponent },
   { path: 'listarPensamento', component: ListarPensamentoComponent },
-  { path: 'pensamentos/excluirPensamento/:id', component: ExcluirPensamentoComponent },
-  { path: 'pensamentos/editarPensamento/:id', component: EditarPensamentoComponent },
+  {
+    path: 'pensamentos/excluirPensamento/:id',
+    component: ExcluirPensamentoComponent,
+  },
+  {
+    path: 'pensamentos/editarPensamento/:id',
+    component: EditarPensamentoComponent,
+  },
+  {
+    path: 'listarPensamento',
+    component: ListarPensamentoComponent,
+    data: {
+      reuseComponent: true,
+    },
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

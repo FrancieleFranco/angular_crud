@@ -1,6 +1,7 @@
 import { PensamentoService } from './../pensamento.service';
 import { Component, OnInit } from '@angular/core';
 import { Pensamento } from '../pensamento';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listar-pensamento',
@@ -12,12 +13,15 @@ export class ListarPensamentoComponent implements OnInit {
   paginaAtual: number = 1;
   haMaisPensamentos: boolean = true;
   filtro: string = '';
+  favorito: boolean = false
+  listaFavoritos: Pensamento[] = []
+  titulo: string = "Meu Mural"
 
-  constructor(private service: PensamentoService) {}
+  constructor(private service: PensamentoService, private router: Router ) {}
 
   ngOnInit(): void {
     this.service
-      .listar(this.paginaAtual, this.filtro)
+      .listar(this.paginaAtual, this.filtro, this.favorito)
       .subscribe((listaPensamentos) => {
         this.listaPensamentos = listaPensamentos;
       });
@@ -25,7 +29,7 @@ export class ListarPensamentoComponent implements OnInit {
 
   carregarMaisPensamentos() {
     this.service
-      .listar(++this.paginaAtual, this.filtro)
+      .listar(++this.paginaAtual, this.filtro, this.favorito)
       .subscribe((listaPensamentos) => {
         this.listaPensamentos.push(...listaPensamentos);
         if (!listaPensamentos.length) {
@@ -37,9 +41,26 @@ export class ListarPensamentoComponent implements OnInit {
     this.haMaisPensamentos = true;
     this.paginaAtual = 1;
     this.service
-      .listar(this.paginaAtual, this.filtro)
+      .listar(this.paginaAtual, this.filtro,  this.favorito)
       .subscribe((listaPensamentos) => {
         this.listaPensamentos = listaPensamentos;
       });
   }
+
+  listarFavoritos(){
+    this.titulo= "Meus favoritos"
+    this.favorito = true
+    this.haMaisPensamentos = true
+    this.paginaAtual = 1
+    this.service.listar(this.paginaAtual, this.filtro,  this.favorito)
+    .subscribe(listaPensamentosFavoritos => {
+     this.listaPensamentos = listaPensamentosFavoritos
+     this.listaFavoritos = listaPensamentosFavoritos
+    } )
+  }
+  recarregarComponente(){
+    this.favorito = false;
+    this.paginaAtual = 1;
+    this.router.navigate([this.router.url]);
+}
 }
